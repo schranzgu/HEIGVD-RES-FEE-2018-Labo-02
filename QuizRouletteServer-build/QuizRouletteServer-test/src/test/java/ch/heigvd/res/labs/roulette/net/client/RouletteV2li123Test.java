@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -56,14 +58,17 @@ public class RouletteV2li123Test {
   @Test
   @TestAuthor(githubId = "l-i-123")
   public void testListStudents_notEmptyList() throws IOException {
-    final String student1 = "student1";
-    final String student2 = "student2";
+    String student1 = "student1";
+    String student2 = "student2";
+
+    Set<Student> students = new HashSet<>();
+    students.add(new Student(student1));
+    students.add(new Student(student2));
 
     IRouletteV2Client client = (IRouletteV2Client)roulettePair.getClient();
     client.loadStudent(student1);
-    assertEquals(new Student(student1), client.listStudents().get(0));
     client.loadStudent(student2);
-    assertEquals(new Student(student2), client.listStudents().get(1));
+    assertEquals(students, new HashSet(client.listStudents()));
   }
 
 }
