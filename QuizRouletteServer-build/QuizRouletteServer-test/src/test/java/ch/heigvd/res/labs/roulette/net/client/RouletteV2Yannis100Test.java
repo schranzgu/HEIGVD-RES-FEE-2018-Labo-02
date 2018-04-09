@@ -2,6 +2,7 @@ package ch.heigvd.res.labs.roulette.net.client;
 
 import ch.heigvd.res.labs.roulette.data.EmptyStoreException;
 import ch.heigvd.res.labs.roulette.data.Student;
+import ch.heigvd.res.labs.roulette.data.StudentsList;
 import ch.heigvd.res.labs.roulette.net.protocol.RouletteV2Protocol;
 import ch.heigvd.schoolpulse.TestAuthor;
 import org.junit.Rule;
@@ -11,8 +12,7 @@ import org.junit.rules.ExpectedException;
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 /**
  * This class contains automated tests to validate the client and the server
@@ -27,6 +27,21 @@ public class RouletteV2Yannis100Test {
 
   @Rule
   public EphemeralClientServerPair roulettePair = new EphemeralClientServerPair(RouletteV2Protocol.VERSION);
+
+
+  @Test
+  @TestAuthor(githubId = "Yannis100")
+  // check the first student so this test is bad
+  public void serverShouldRun() throws IOException, EmptyStoreException {
+    assertTrue(roulettePair.getServer().isRunning());
+  }
+
+  @Test
+  @TestAuthor(githubId = "Yannis100")
+  // check the first student so this test is bad
+  public void clientConnected() throws IOException, EmptyStoreException {
+    assertTrue(roulettePair.getClient().isConnected());
+  }
 
   @Test
   @TestAuthor(githubId = "Yannis100")
