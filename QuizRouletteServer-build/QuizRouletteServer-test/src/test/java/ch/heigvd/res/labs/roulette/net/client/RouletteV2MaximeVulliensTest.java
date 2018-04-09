@@ -68,14 +68,30 @@ public class RouletteV2MaximeVulliensTest {
   @Test
   @TestAuthor(githubId = "Maxime-Vulliens")
   public void theServerShouldListStudent() throws IOException, EmptyStoreException {
-    List<Student> test;
+    List<Student> test ;
+    Student stu0 = new Student("Dylan");
+    Student stu1 = new Student("Max");
+    Student stu2 = new Student("Alex");
+
     IRouletteV2Client client = (IRouletteV2Client)roulettePair.getClient();
-    client.loadStudent("Max");
-    client.loadStudent("Dylan");
-    client.loadStudent("Yann");
+
+    // Add Student
+    client.loadStudent(stu0.getFullname());
+    client.loadStudent(stu1.getFullname());
+    client.loadStudent(stu2.getFullname());
     assertEquals(3,client.getNumberOfStudents());
     test = client.listStudents();
     assertEquals(3, test.size());
+
+    // Test that all student listed are clients we have add
+    for (Student stu : test){
+      if ((stu.getFullname() != stu0.getFullname()) &&
+              (stu.getFullname() != stu1.getFullname()) &&
+              (stu.getFullname() != stu2.getFullname())){
+        assertTrue(true);
+      }
+    }
+
   }
 
 
