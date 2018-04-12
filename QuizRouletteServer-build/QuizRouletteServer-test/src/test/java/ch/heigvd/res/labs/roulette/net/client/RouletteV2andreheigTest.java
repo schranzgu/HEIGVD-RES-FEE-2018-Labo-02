@@ -58,7 +58,7 @@ public class RouletteV2andreheigTest {
     client.loadStudent("pikachu");
     client.loadStudent("goku");
     client.loadStudent("flubber");
-    assertEquals("{\"students\":[{\"fullname\":\"pikachu\"},{\"fullname\":\"goku\"}]},{\"fullname\":\"flubber\"}]}", client.listStudents());
+    assertEquals("{\"students\":[{\"fullname\":\"pikachu\"},{\"fullname\":\"goku\"},{\"fullname\":\"flubber\"}]}", client.listStudents());
   }
 
   @Test
