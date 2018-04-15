@@ -2,7 +2,6 @@ package ch.heigvd.res.labs.roulette.net.client;
 
 import ch.heigvd.res.labs.roulette.data.EmptyStoreException;
 import ch.heigvd.res.labs.roulette.data.Student;
-import ch.heigvd.res.labs.roulette.data.StudentsList;
 import ch.heigvd.res.labs.roulette.net.protocol.RouletteV2Protocol;
 import ch.heigvd.schoolpulse.TestAuthor;
 import org.junit.Rule;
@@ -44,7 +43,7 @@ public class RouletteV2LionelWidmerTest {
     @TestAuthor(githubId = "lionelwidmer")
     public void itShouldBePossibleForARouletteClientToConnectToARouletteServer() throws Exception {
         int port = roulettePair.getServer().getPort();
-        IRouletteV2Client client = (IRouletteV2Client) roulettePair.getClient();
+        IRouletteV2Client client = new RouletteV2ClientImpl();
         assertFalse(client.isConnected());
         client.connect("localhost", port);
         assertTrue(client.isConnected());
@@ -60,7 +59,7 @@ public class RouletteV2LionelWidmerTest {
     @TestAuthor(githubId = "lionelwidmer")
     public void theServerShouldHaveZeroStudentsAtStart() throws IOException {
         int port = roulettePair.getServer().getPort();
-        IRouletteV2Client client = (IRouletteV2Client) roulettePair.getClient();
+        IRouletteV2Client client = new RouletteV2ClientImpl();
         client.connect("localhost", port);
         int numberOfStudents = client.getNumberOfStudents();
         assertEquals(0, numberOfStudents);
