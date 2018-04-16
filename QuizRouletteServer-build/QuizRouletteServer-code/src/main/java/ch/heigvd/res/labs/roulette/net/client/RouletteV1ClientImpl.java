@@ -70,7 +70,6 @@ public class RouletteV1ClientImpl implements IRouletteV1Client {
       clr();
    }
 
-   /////////////////////
    @Override
    public Student pickRandomStudent() throws EmptyStoreException, IOException {
       toServer.write((RouletteV1Protocol.CMD_RANDOM + "\n").getBytes());
