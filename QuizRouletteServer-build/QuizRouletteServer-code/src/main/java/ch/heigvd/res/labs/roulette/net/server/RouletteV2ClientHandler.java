@@ -45,19 +45,6 @@ public class RouletteV2ClientHandler implements IClientHandler {
          LOG.log(Level.INFO, "COMMAND: {0}", command);
          switch (command.toUpperCase()) {
 
-            case RouletteV2Protocol.CMD_CLEAR:
-               store.clear();
-               //writer.println(RouletteV2Protocol.RESPONSE_CLEAR_DONE);
-               writer.flush();
-               break;
-
-            case RouletteV2Protocol.CMD_LIST:
-               StudentsList list = new StudentsList();
-               list.setStudents(store.listStudents());
-               writer.println(JsonObjectMapper.toJson(list));
-               writer.flush();
-               break;
-
             case RouletteV2Protocol.CMD_RANDOM:
                RandomCommandResponse rcResponse = new RandomCommandResponse();
                try {
@@ -96,6 +83,20 @@ public class RouletteV2ClientHandler implements IClientHandler {
                //writer.println("{\"status\":\"success\",\"numberOfCommands\":"+commandCounter+"}");
                writer.flush();
                break;
+
+            case RouletteV2Protocol.CMD_CLEAR:
+               store.clear();
+               //writer.println(RouletteV2Protocol.RESPONSE_CLEAR_DONE);
+               writer.flush();
+               break;
+
+            case RouletteV2Protocol.CMD_LIST:
+               StudentsList list = new StudentsList();
+               list.setStudents(store.listStudents());
+               writer.println(JsonObjectMapper.toJson(list));
+               writer.flush();
+               break;
+
             default:
                writer.println("Huh? please use HELP if you don't know what commands are available.");
                writer.flush();

@@ -9,8 +9,8 @@ import ch.heigvd.res.labs.roulette.net.protocol.RandomCommandResponse;
 import java.io.*;
 import java.net.Socket;
 import java.util.List;
-//import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.ArrayList;
 
 /**
  * This class implements the client side of the protocol specification (version 1).
@@ -25,6 +25,7 @@ public class RouletteV1ClientImpl implements IRouletteV1Client {
    InputStream fromServer;
    OutputStream toServer;
    private static byte[] buffer;
+   ArrayList<Student> studentsList;
 
    @Override
    public void connect(String server, int port) throws IOException {
@@ -49,29 +50,27 @@ public class RouletteV1ClientImpl implements IRouletteV1Client {
    }
 
    @Override
-   public void loadStudent(String fullname) throws IOException {
-      toServer.write((RouletteV1Protocol.CMD_LOAD + "\n").getBytes());
-      clr();
-
-      toServer.write((fullname + "\n").getBytes());
-
-      toServer.write((RouletteV1Protocol.CMD_LOAD_ENDOFDATA_MARKER + "\n").getBytes());
-      clr();
+   public void loadStudent(final String fullname) throws IOException {
+      studentsList = new ArrayList<Student>() {
+         {
+            add(new Student(fullname));
+         }
+      };
+      this.loadStudents(studentsList);
    }
 
    @Override
    public void loadStudents(List<Student> students) throws IOException {
-      toServer.write((RouletteV1Protocol.CMD_LOAD).getBytes());
+      toServer.write((RouletteV1Protocol.CMD_LOAD + "\n").getBytes());
       clr();
-
-      for (Student s : students) {
-         toServer.write((s.getFullname() + "\n").getBytes());
+      for (Student student : students) {
+         toServer.write(((student.getFullname()) + "\n").getBytes());
       }
-
       toServer.write((RouletteV1Protocol.CMD_LOAD_ENDOFDATA_MARKER + "\n").getBytes());
       clr();
    }
 
+   /////////////////////
    @Override
    public Student pickRandomStudent() throws EmptyStoreException, IOException {
       toServer.write((RouletteV1Protocol.CMD_RANDOM + "\n").getBytes());

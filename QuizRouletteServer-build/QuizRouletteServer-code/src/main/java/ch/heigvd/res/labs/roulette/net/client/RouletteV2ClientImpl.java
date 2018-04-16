@@ -6,6 +6,7 @@ import ch.heigvd.res.labs.roulette.data.StudentsList;
 import ch.heigvd.res.labs.roulette.net.protocol.RouletteV2Protocol;
 import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * This class implements the client side of the protocol specification (version 2).
@@ -19,12 +20,14 @@ public class RouletteV2ClientImpl extends RouletteV1ClientImpl implements IRoule
    @Override
    public void clearDataStore() throws IOException {
       //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
       toServer.write((RouletteV2Protocol.CMD_CLEAR + "\n").getBytes());
+
    }
 
    @Override
    public List<Student> listStudents() throws IOException {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      return new ArrayList<>(studentsList);
    }
 
    @Override
