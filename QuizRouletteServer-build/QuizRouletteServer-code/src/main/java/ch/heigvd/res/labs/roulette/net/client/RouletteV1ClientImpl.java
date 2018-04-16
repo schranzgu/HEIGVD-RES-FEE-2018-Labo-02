@@ -24,7 +24,7 @@ public class RouletteV1ClientImpl implements IRouletteV1Client {
    Socket clientSocket;
    InputStream fromServer;
    OutputStream toServer;
-   private static byte[] buffer;
+   protected static byte[] buffer;
    ArrayList<Student> studentsList;
 
    @Override
@@ -56,16 +56,18 @@ public class RouletteV1ClientImpl implements IRouletteV1Client {
             add(new Student(fullname));
          }
       };
-      this.loadStudents(studentsList);
+      loadStudents(studentsList);
    }
 
    @Override
    public void loadStudents(List<Student> students) throws IOException {
       toServer.write((RouletteV1Protocol.CMD_LOAD + "\n").getBytes());
       clr();
+      
       for (Student student : students) {
          toServer.write(((student.getFullname()) + "\n").getBytes());
       }
+      
       toServer.write((RouletteV1Protocol.CMD_LOAD_ENDOFDATA_MARKER + "\n").getBytes());
       clr();
    }

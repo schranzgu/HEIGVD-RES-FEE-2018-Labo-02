@@ -6,7 +6,7 @@ import ch.heigvd.res.labs.roulette.data.StudentsList;
 import ch.heigvd.res.labs.roulette.net.protocol.RouletteV2Protocol;
 import java.io.IOException;
 import java.util.List;
-import java.util.ArrayList;
+import java.io.ByteArrayOutputStream;
 
 /**
  * This class implements the client side of the protocol specification (version 2).
@@ -15,19 +15,21 @@ import java.util.ArrayList;
  */
 public class RouletteV2ClientImpl extends RouletteV1ClientImpl implements IRouletteV2Client {
 
-   protected static byte[] buffer = new byte[255];
-
    @Override
    public void clearDataStore() throws IOException {
-      //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
       toServer.write((RouletteV2Protocol.CMD_CLEAR + "\n").getBytes());
-
    }
 
    @Override
    public List<Student> listStudents() throws IOException {
-      return new ArrayList<>(studentsList);
+      toServer.write((RouletteV2Protocol.CMD_LIST + '\n').getBytes());
+      toServer.flush();
+
+      ByteArrayOutputStream response = new ByteArrayOutputStream();
+      response.write(buffer, 0, fromServer.read(buffer));
+      StudentsList list = JsonObjectMapper.parseJson(response.toString(), StudentsList.class);
+
+      return list.getStudents();
    }
 
    @Override

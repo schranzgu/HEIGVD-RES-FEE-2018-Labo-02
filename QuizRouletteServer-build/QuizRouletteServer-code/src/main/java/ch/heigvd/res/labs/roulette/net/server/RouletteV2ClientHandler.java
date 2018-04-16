@@ -4,7 +4,6 @@ import ch.heigvd.res.labs.roulette.data.EmptyStoreException;
 import ch.heigvd.res.labs.roulette.data.IStudentsStore;
 import ch.heigvd.res.labs.roulette.data.JsonObjectMapper;
 import ch.heigvd.res.labs.roulette.net.protocol.InfoCommandResponse;
-import ch.heigvd.res.labs.roulette.net.protocol.ListCommandResponse;
 import ch.heigvd.res.labs.roulette.net.protocol.RandomCommandResponse;
 import ch.heigvd.res.labs.roulette.net.protocol.RouletteV2Protocol;
 import ch.heigvd.res.labs.roulette.data.StudentsList;
@@ -86,7 +85,6 @@ public class RouletteV2ClientHandler implements IClientHandler {
 
             case RouletteV2Protocol.CMD_CLEAR:
                store.clear();
-               //writer.println(RouletteV2Protocol.RESPONSE_CLEAR_DONE);
                writer.flush();
                break;
 
