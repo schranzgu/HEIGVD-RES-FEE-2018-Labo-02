@@ -14,14 +14,21 @@ import java.util.List;
  */
 public class RouletteV2ClientImpl extends RouletteV1ClientImpl implements IRouletteV2Client {
 
-  @Override
-  public void clearDataStore() throws IOException {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-  }
+   protected static byte[] buffer = new byte[255];
 
-  @Override
-  public List<Student> listStudents() throws IOException {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-  }
-  
+   @Override
+   public void clearDataStore() throws IOException {
+      //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      toServer.write((RouletteV2Protocol.CMD_CLEAR + "\n").getBytes());
+   }
+
+   @Override
+   public List<Student> listStudents() throws IOException {
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   }
+
+   @Override
+   public String getProtocolVersion() throws IOException {
+      return RouletteV2Protocol.VERSION;
+   }
 }

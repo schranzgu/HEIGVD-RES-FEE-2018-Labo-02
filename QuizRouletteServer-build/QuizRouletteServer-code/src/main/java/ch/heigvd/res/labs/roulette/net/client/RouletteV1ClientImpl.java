@@ -106,7 +106,7 @@ public class RouletteV1ClientImpl implements IRouletteV1Client {
       return response.getProtocolVersion();
    }
 
-   private void clr() throws IOException {
+   protected void clr() throws IOException {
       fromServer.read(buffer);
    }
 }
